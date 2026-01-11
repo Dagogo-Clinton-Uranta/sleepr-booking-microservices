@@ -3,6 +3,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
     //for root is sort of like an ainitializer
-    imports: [MongooseModule.forRoot('')]
+    imports: [MongooseModule.forRoot(''/**connection string to be here */)]
 })
 export class DatabaseModule {}
