@@ -7,9 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     imports: [MongooseModule.forRootAsync({
         imports:[ConfigModule], //we cant use configService below without importing the ConfigModule, which houses the configService
          useFactory:(configService:ConfigService)=>({
-       //configService above is using .env internally
-        uri: configService.get('MONGODB_URI') /**connection string to be here */
-      
+        uri: configService.get('MONGODB_URI')  //configService above is using .env internally
     }),
       inject:[ConfigService] //the list of dependecies we need available to actually run this useFactory function
     
