@@ -51,8 +51,22 @@ return document
   }
 
 
-  
+  return document
 
+ }
+
+
+ async find(filterQuery: FilterQuery<TDocument>): Promise<TDocument[]> {
+
+   return this.model.find(filterQuery).lean<TDocument[]>(true)
+
+
+ }
+
+
+ async findOneAndDelete(filterQuery: FilterQuery<TDocument>): Promise<TDocument>{
+  //the generic in the promise affected the return of this function as it was typed wrong
+    return this.model.findOneAndDelete(filterQuery).lean<TDocument>(true);
  }
 
 
