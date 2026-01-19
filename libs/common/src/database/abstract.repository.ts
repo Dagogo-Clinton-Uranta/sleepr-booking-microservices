@@ -66,8 +66,13 @@ return document
 
  async findOneAndDelete(filterQuery: FilterQuery<TDocument>): Promise<TDocument>{
   //the generic in the promise affected the return of this function as it was typed wrong
-    return this.model.findOneAndDelete(filterQuery).lean<TDocument>(true);
- }
+    return this.model.findOneAndDelete(filterQuery).lean<TDocument>(true); //you are having issues because you are not actually deleting anything
+ 
+ 
+  }
+
+
+ 
 
 
 
