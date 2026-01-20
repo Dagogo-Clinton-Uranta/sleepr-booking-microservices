@@ -1,16 +1,18 @@
 import { Module } from '@nestjs/common';
 import { ReservationsService } from './reservations.service';
 import { ReservationsController } from './reservations.controller';
-import { DatabaseModule } from '@app/common';
+import { DatabaseModule, LoggerModule } from '@app/common';
 import { ReservationDocument, ReservationSchema } from './models/reservation.schema';
 import { ReservationsRepository } from './reservations.repository';
 
+
 @Module({
-  imports:[DatabaseModule,
-    DatabaseModule.forFeature([{
+  imports:[DatabaseModule,      // static, already defined module
+    DatabaseModule.forFeature([{  // dynamically generated module
      name:ReservationDocument.name,
      schema:ReservationSchema
-    }])
+    }]),
+    LoggerModule //from @app/common , as we moved the pino import
   ],
   controllers: [ReservationsController],
   providers: [ReservationsService,ReservationsRepository],
