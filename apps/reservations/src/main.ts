@@ -7,7 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create(ReservationsModule);
  
   //non defualt stuff
-  app.useGlobalPipes(new ValidationPipe()) //we use global pipes for system wide validation...using nest js class-validator and class transformer
+  app.useGlobalPipes(new ValidationPipe({whitelist: true})) //we use global pipes for system wide validation...using nest js class-validator and class transformer
   app.useLogger(app.get(Logger)) 
  //non default stuff - end
 
