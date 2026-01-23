@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 import { ModelDefinition, MongooseModule } from '@nestjs/mongoose';
 
 @Module({
     //for root is sort of like an ainitializer
     imports: [MongooseModule.forRootAsync({
-        imports:[ConfigModule], //we cant use configService below without importing the ConfigModule, which houses the configService
+       
          useFactory:(configService:ConfigService)=>({
         uri: configService.get('MONGODB_URI')  //configService above is using .env internally
     }),
