@@ -1,8 +1,11 @@
 import { Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { localAuthGuard } from './guards/local-auth-guard';
-import { CurrentUser } from './current-user.decorator';
+import { CurrentUser } from '../../../libs/common/src/decorators/current-user.decorator';
 import { UserDocument } from './users/models/user.schema';
+
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { JwtAuthGuard } from './guards/jwt-auth-guard';
 
 @Controller()
 export class AuthController {
@@ -18,6 +21,15 @@ async login(
 
  response.send(user) // why are we doing this ?
 }
+
+
+@UseGuards(JwtAuthGuard) //guards work the same in microservices
+@MessagePattern('authenticate')
+  //message pattern allows us to accept incoming RTC calls on our chosen transport layer
+async authenticate(@Payload() data:any){
+return data.user
+}
+
 
 
 

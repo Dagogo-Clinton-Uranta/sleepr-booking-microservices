@@ -1,15 +1,16 @@
 import { Module } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ModelDefinition, MongooseModule } from '@nestjs/mongoose';
 
 @Module({
     //for root is sort of like an ainitializer
     imports: [MongooseModule.forRootAsync({
-       
+      imports:[ConfigModule], 
+      inject:[ConfigService] ,//the list of dependecies we need available to actually run this useFactory function
          useFactory:(configService:ConfigService)=>({
         uri: configService.get('MONGODB_URI')  //configService above is using .env internally
-    }),
-      inject:[ConfigService] //the list of dependecies we need available to actually run this useFactory function
+    })
+     
     
     
     }),
