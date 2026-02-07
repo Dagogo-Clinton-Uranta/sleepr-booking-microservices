@@ -1,6 +1,7 @@
 import { Logger, NotFoundException } from "@nestjs/common"
 import { AbstractDocument } from "./abstract.schema"
-import { Model, Types, UpdateQuery,FilterQuery } from "mongoose"
+import { Model, Types, UpdateQuery, FilterQuery} from "mongoose"
+
 
 //this is going to be the common repository that all other repos in our microservices will extend from
 //it makes sure that we dont have to duplicate this code in all our microservices -DRY
@@ -12,7 +13,7 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument>{
  
  constructor(protected readonly model: Model<TDocument>){ }
 
- protected abstract readonly logger: Logger;
+ protected abstract readonly logger: Logger; //this is a common logger that the children of this abstrac calsss can use
 
  async create(document: Omit<TDocument,'_id'>):Promise<TDocument>{
   const createdDocument = new this.model({
