@@ -15,13 +15,13 @@ startDate: Date;
 @Type(()=>Date)
 endDate: Date;
 
-@IsString()
-@IsNotEmpty()
-placeId: string;
-
-@IsString()
-@IsNotEmpty()
-invoice: string;
+//@IsString()
+//@IsNotEmpty()      //we want to get these from strip, so we are commenting it out
+//placeId: string;
+//
+//@IsString()
+//@IsNotEmpty()
+//invoice: string;
 
 
 @IsDefined()

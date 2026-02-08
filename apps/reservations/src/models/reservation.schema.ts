@@ -15,7 +15,9 @@ endDate:Date;
 
 @Prop()
 userId: string;
-placeId:string;
+
+
+@Prop()
 invoice:string;
 
 
