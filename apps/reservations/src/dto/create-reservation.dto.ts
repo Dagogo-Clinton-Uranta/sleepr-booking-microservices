@@ -1,5 +1,7 @@
+import { CreateChargeDto } from "@app/common";
+
 import { Type } from "class-transformer";
-import { IsDate, IsNotEmpty, IsString } from "class-validator";
+import { IsDate, IsDefined, IsNotEmpty, IsNotEmptyObject, IsNumber, IsString, ValidateNested } from "class-validator";
 
 
 
@@ -20,4 +22,13 @@ placeId: string;
 @IsString()
 @IsNotEmpty()
 invoice: string;
+
+
+@IsDefined()
+@IsNotEmptyObject()
+@ValidateNested()
+charge:CreateChargeDto
+
+
+
 }
