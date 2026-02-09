@@ -20,7 +20,6 @@ userId: string;
 @Prop()
 invoice:string;
 
-
 }
 
 
