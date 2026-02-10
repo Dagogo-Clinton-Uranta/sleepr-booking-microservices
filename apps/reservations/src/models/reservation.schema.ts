@@ -17,7 +17,7 @@ endDate:Date;
 userId: string;
 
 
-@Prop()
+@Prop() 
 invoice:string;
 
 }
