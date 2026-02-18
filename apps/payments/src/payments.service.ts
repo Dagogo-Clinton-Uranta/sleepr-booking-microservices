@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import Stripe from 'stripe'
-import { CreateChargeDto } from '@app/common';
+import { CreateChargeDto, NOTIFICATIONS_SERVICE } from '@app/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { PaymentsCreateChargeDto } from './dto/payments-create-charge.dto';
 
 @Injectable()
 export class PaymentsService {
@@ -14,10 +16,13 @@ export class PaymentsService {
   )
 
 
-  constructor(private readonly configService: ConfigService){}
+  constructor(private readonly configService: ConfigService,
+    @Inject(NOTIFICATIONS_SERVICE) private readonly notificationsService: ClientProxy
+  )
+  {}
 //anything you declare in the scontructor argument(i.e, passed into the constructor), you can use it in the rest of the class..thats the point of the injection
   
- async createCharge(/*card:Stripe.PaymentMethodCreateParams.Card,amount:number*/ {/*card,*/amount}: CreateChargeDto){
+ async createCharge(/*card:Stripe.PaymentMethodCreateParams.Card,amount:number*/ {card,amount,email}: PaymentsCreateChargeDto){
  
  // const paymentMethod = await this.stripe.paymentMethods.create({
  // type:"card",
@@ -33,6 +38,8 @@ export class PaymentsService {
   //payment_method_types:['card'],
   currency:'gbp'
  });
+
+ this.notificationsService.emit('notify_email',{email})
 
 
  return paymentIntent

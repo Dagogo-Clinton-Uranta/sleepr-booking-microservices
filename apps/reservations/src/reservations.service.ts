@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { UpdateReservationDto } from './dto/update-reservation.dto';
 import { ReservationsRepository } from './reservations.repository';
-import { PAYMENTS_SERVICE } from '@app/common';
+import { PAYMENTS_SERVICE, UserDto } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { map } from 'rxjs';
 
@@ -16,11 +16,11 @@ export class ReservationsService {
  }
 
 
- async create(createReservationDto: CreateReservationDto, userId:string) {
+ async create(createReservationDto: CreateReservationDto, {email,_id: userId}: UserDto) {
     
   //NOTES - we had a subscribe block after the .send, but nest js subscribes to observables on it's own ? -so we changed .subscribe to .pipe
   
-return  this.paymentsService.send('create_charge',createReservationDto.charge)
+return  this.paymentsService.send('create_charge',{...createReservationDto.charge,email})
  .pipe(
   map(
   (res)=>{ // we subscribe to the microservice cuz it returns an observable and you subscribe to observables

@@ -15,7 +15,7 @@ export class ReservationsController {
   @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() createReservationDto: CreateReservationDto, @CurrentUser() user:UserDto) {
-    const _user = this.reservationsService.create(createReservationDto,user._id);
+    const _user = this.reservationsService.create(createReservationDto,user);
 
     console.log(user)
     return _user
