@@ -1,7 +1,7 @@
 import { AbstractDocument } from "@app/common/database/abstract.schema";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 
-@Schema({versionKey:false})
+@Schema({versionKey:false}) //versionKey false is when u dont want versioning on your documents
 export class ReservationDocument extends AbstractDocument {
 
 @Prop() //this is for nest js to know its a mongoose schema property

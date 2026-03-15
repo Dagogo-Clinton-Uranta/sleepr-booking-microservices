@@ -16,6 +16,15 @@ export class ReservationsService {
  }
 
 
+ async findAll() {
+  return this.reservationsRepository.find({});
+}
+
+async findOne(_id: string) {
+  return this.reservationsRepository.findOne({_id});
+}
+
+
  async create(createReservationDto: CreateReservationDto, {email,_id: userId}: UserDto) {
     
   //NOTES - we had a subscribe block after the .send, but nest js subscribes to observables on it's own ? -so we changed .subscribe to .pipe
@@ -46,13 +55,7 @@ return  this.paymentsService.send('create_charge',{...createReservationDto.charg
 
   }
 
- async findAll() {
-    return this.reservationsRepository.find({});
-  }
 
-  async findOne(_id: string) {
-    return this.reservationsRepository.findOne({_id});
-  }
 
  async update(_id: string, updateReservationDto: UpdateReservationDto) {
     return this.reservationsRepository.findOneAndUpdate(
