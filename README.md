@@ -1,98 +1,150 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🛌 Sleepr Microservices
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A scalable microservices-based backend for handling **authentication, reservations, and payments**, built with NestJS and Stripe.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This project is designed to serve as a **backend system** that you can plug into any frontend (web or mobile) to manage bookings and transactions.
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🧠 Overview
 
-## Project setup
+This system follows a **microservices architecture**, where each service is responsible for a specific domain:
 
-```bash
-$ npm install
-```
+- **Authentication Service** → Handles user login and JWT authentication  
+- **Reservations Service** → Manages booking logic  
+- **Payments Service** → Processes payments via Stripe  
+- **Notifications Service** → Sends user notifications after successful actions  
 
-## Compile and run the project
+Each service communicates internally using **TCP messaging**.
 
-```bash
-# development
-$ npm run start
+---
 
-# watch mode
-$ npm run start:dev
+## 🔄 How It Works
 
-# production mode
-$ npm run start:prod
-```
+1. A user logs in via the Authentication Service and receives a JWT  
+2. The user sends a request to the Reservations Service to create a booking  
+3. The Reservations Service validates the user via the Authentication Service (TCP)  
+4. Once verified, it calls the Payments Service  
+5. After a successful Stripe payment:
+   - The Payments Service triggers the Notifications Service  
+   - The user is notified that payment is successful and the reservation is confirmed  
 
-## Run tests
+---
 
-```bash
-# unit tests
-$ npm run test
+## 🏗️ System Architecture
 
-# e2e tests
-$ npm run test:e2e
+![Microservices Architecture](./assets/images/architecture.png)
 
-# test coverage
-$ npm run test:cov
-```
+---
 
-## Deployment
+## 🚀 API Endpoints
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+> Replace `your-hosting` with your deployed base URL
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+**Login**
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+POST https://your-hosting/login
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
 
-## Resources
+**Create Reservation**
 
-Check out a few resources that may come in handy when working with NestJS:
+POST https://your-hosting/reservations
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## ✨ Features
 
-## Stay in touch
+- 🔐 JWT-based Authentication  
+- 🧩 Microservices architecture (NestJS)  
+- 💳 Stripe payment integration  
+- 📧 Email notifications (Gmail)  
+- 🗄️ MongoDB database with TypeORM  
+- 🔄 Inter-service communication via TCP  
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+---
 
-## License
+## 🛠️ Tech Stack
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- NestJS  
+- Stripe API  
+- MongoDB  
+- TypeORM  
+- Node.js  
+
+---
+
+## ⚙️ Installation
+
+### 1. Clone the repository
+
+git clone https://github.com/yourusername/yourrepo.git
+
+cd yourrepo
+
+
+### 2. Install dependencies
+
+
+### 3. Configure environment variables
+
+Each microservice has its own `.env` file.
+
+Refer to the `.env.example` files in each service and create corresponding `.env` files.
+
+Example variables:
+
+JWT_SECRET=your_secret
+STRIPE_SECRET_KEY=your_key
+MONGO_URI=your_mongodb_uri
+EMAIL_USER=your_email
+EMAIL_PASS=your_password
+
+
+
+---
+
+### 4. Run the application
+
+
+
+> Ensure all microservices are running concurrently.
+
+---
+
+## 📖 Usage
+
+1. Authenticate a user via `/login`  
+2. Use the returned JWT for authorized requests  
+3. Create a reservation via `/reservations`  
+4. Complete payment through Stripe  
+5. Receive confirmation via email notification  
+
+---
+
+## ⚠️ Notes
+
+- This project does **not include a frontend**  
+- You are expected to build your own UI and connect it to this backend  
+- Ensure all required services are running before making requests  
+
+---
+
+## 🚧 Roadmap
+
+- 🔄 Switch to MySQL with TypeORM   
+- 📦 Add end to end tests  
+- ☁️ Improve deployment with CI/CD pipelines  
+
+
+---
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+---
+
+## 📄 License
+
+MIT
